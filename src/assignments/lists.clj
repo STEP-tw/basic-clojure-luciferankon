@@ -191,7 +191,7 @@
    :use          '[remove into set ->>]
    :implemented? true}
   [coll1 coll2]
-  (concat coll1 (difference coll2 coll1)))
+  (into coll1 (difference coll2 coll1)))
 
 ;; points-around-origin is a def not a defn
 (def
@@ -328,8 +328,21 @@
       (= n (first coll)) counter
       :else (recur (rest coll) (inc counter)))))
 
+(defn distinct?'
+  [coll]
+  (every? (partial apply distinct?) coll))
+
 (defn validate-sudoku-grid
   "Given a 9 by 9 sudoku grid, validate it."
   {:level        :hard
    :implemented? false}
-  [grid])
+  [grid]
+  (let [rows grid
+        cols (apply map vector grid)
+        boxes (->> grid
+                   flatten
+                   (partition 2)
+                   (partition 2)
+                   (apply map concat)
+                   (map (partial partition 4)))]
+    (and (distinct?' rows) (distinct?' cols) (distinct?' boxes))))

@@ -24,9 +24,9 @@
   (testing "[]"
     (is (= 0 (count' []))))
   (testing "map"
-    (is (= 2 (count {:one 1 :two 2}))))
+    (is (= 2 (count' {:one 1 :two 2}))))
   (testing "string"
-    (is (= 6 (count "abcdef")))))
+    (is (= 6 (count' "abcdef")))))
 
 (deftest reverse-test
   (testing "seqable collection"
